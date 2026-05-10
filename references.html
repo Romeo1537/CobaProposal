@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>References | CoBa Compliance Knowledge Base</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+:root {
+  --black: #141414;
+  --white: #ffffff;
+  --off-grey: #f4f4f4;
+  --banks: #a8e6cf;
+  --business: #b8d4e3;
+  --accent-purple: #c4b5fd;
+  --accent-amber: #fcd34d;
+  --muted: #6b6b6b;
+  --radius-btn: 100px;
+  --radius-block: 24px;
+}
+
+html { scroll-behavior: smooth; overflow-x: hidden; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--black);
+  background: var(--white);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* NAV */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 20px 8%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 1px 0 rgba(0,0,0,0.06);
+}
+
+.nav-logo {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--black);
+  text-decoration: none;
+  letter-spacing: -0.02em;
+}
+
+.nav-links {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.nav-links a {
+  color: var(--black);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 400;
+  padding: 8px 16px;
+  border-radius: var(--radius-btn);
+  transition: all 0.3s ease;
+}
+
+.nav-links a:hover { opacity: 0.6; }
+
+.nav-cta {
+  background: var(--black) !important;
+  color: var(--white) !important;
+  font-weight: 500 !important;
+}
+
+/* HEADER */
+.page-header {
+  padding: 160px 8% 80px;
+  max-width: 900px;
+}
+
+.page-header h1 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 16px;
+}
+
+.page-header p {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--muted);
+  max-width: 650px;
+}
+
+/* CONTENT */
+.content {
+  padding: 0 8% 120px;
+  max-width: 900px;
+}
+
+.ref-section {
+  margin-bottom: 64px;
+}
+
+.ref-section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 24px;
+  padding: 6px 14px;
+  border-radius: var(--radius-btn);
+}
+
+.label-green { background: rgba(168,230,207,0.15); color: #16a34a; }
+.label-purple { background: rgba(196,181,253,0.15); color: #7c3aed; }
+.label-amber { background: rgba(252,211,77,0.15); color: #d97706; }
+.label-grey { background: rgba(0,0,0,0.04); color: var(--muted); }
+
+.ref-list {
+  list-style: none;
+}
+
+.ref-item {
+  padding: 20px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 16px;
+  align-items: start;
+}
+
+.ref-item:first-child { padding-top: 0; }
+.ref-item:last-child { border-bottom: none; }
+
+.ref-title {
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin-bottom: 4px;
+  line-height: 1.4;
+}
+
+.ref-title a {
+  color: var(--black);
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.ref-title a:hover { opacity: 0.6; }
+
+.ref-meta {
+  font-size: 0.8rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.ref-tag {
+  font-size: 0.7rem;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: var(--radius-btn);
+  white-space: nowrap;
+  margin-top: 4px;
+}
+
+.tag-standard { background: rgba(0,0,0,0.04); color: var(--muted); }
+.tag-guidance { background: rgba(168,230,207,0.12); color: #16a34a; }
+.tag-article { background: rgba(196,181,253,0.12); color: #7c3aed; }
+.tag-tool { background: rgba(252,211,77,0.12); color: #d97706; }
+
+/* FOOTER */
+.footer {
+  background: var(--black);
+  padding: 60px 8%;
+  text-align: center;
+}
+
+.footer-text {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.35);
+}
+
+/* ========================================
+   PAGE LOAD OVERLAY
+   ======================================== */
+.page-loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--black);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+.page-loader.done {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.loader-logo {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--white);
+  letter-spacing: -0.02em;
+  margin-bottom: 32px;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: loaderFadeUp 0.5s ease 0.1s forwards;
+}
+
+.loader-bar-track {
+  width: 160px;
+  height: 2px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 2px;
+  overflow: hidden;
+  opacity: 0;
+  animation: loaderFadeUp 0.4s ease 0.3s forwards;
+}
+
+.loader-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--banks), var(--accent-purple));
+  border-radius: 2px;
+  animation: loaderFill 0.8s ease 0.4s forwards;
+}
+
+.loader-label {
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.25);
+  margin-top: 16px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0;
+  animation: loaderFadeUp 0.4s ease 0.4s forwards;
+}
+
+@keyframes loaderFadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes loaderFill {
+  0% { width: 0%; }
+  60% { width: 70%; }
+  100% { width: 100%; }
+}
+
+body.loading { overflow: hidden; }
+
+/* Content reveal after load */
+.page-header h1,
+.page-header p {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.page-header h1 { transition-delay: 0.1s; }
+.page-header p { transition-delay: 0.2s; }
+
+.ref-section {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.ref-section:nth-child(1) { transition-delay: 0.25s; }
+.ref-section:nth-child(2) { transition-delay: 0.35s; }
+.ref-section:nth-child(3) { transition-delay: 0.45s; }
+.ref-section:nth-child(4) { transition-delay: 0.55s; }
+
+body.loaded .page-header h1,
+body.loaded .page-header p,
+body.loaded .ref-section {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 600px) {
+  .nav-links { display: none; }
+  .ref-item { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body class="loading">
+
+<!-- Page Loader -->
+<div class="page-loader" id="pageLoader">
+  <div class="loader-logo">References</div>
+  <div class="loader-bar-track">
+    <div class="loader-bar-fill"></div>
+  </div>
+  <div class="loader-label">Loading sources</div>
+</div>
+
+<!-- Navigation -->
+<nav class="nav">
+  <a href="index.html" class="nav-logo">Romeo Lam</a>
+  <div class="nav-links">
+    <a href="compliance.html">Compliance</a>
+    <a href="index.html">90-Day Plan</a>
+    <a href="compliance.html" class="nav-cta">Back</a>
+  </div>
+</nav>
+
+<!-- Header -->
+<div class="page-header">
+  <h1>References and Sources</h1>
+  <p>Primary sources, standards documentation, and guidance materials used to build the compliance knowledge base. All frameworks researched as of May 2026.</p>
+</div>
+
+<!-- Content -->
+<div class="content">
+
+  <!-- ISO 27001 -->
+  <div class="ref-section">
+    <span class="ref-section-label label-green">ISO/IEC 27001:2022</span>
+    <ul class="ref-list">
+      <li class="ref-item">
+        <div>
+          <div class="ref-title"><a href="https://www.iso.org/standard/27001" target="_blank" rel="noopener">ISO/IEC 27001:2022 — Information security, cybersecurity and privacy protection</a></div>
+          <div class="ref-meta">International Organization for Standardization. Published October 2022. The definitive standard document specifying requirements for establishing, implementing, maintaining, and continually improving an ISMS.</div>
+        </div>
+        <span class="ref-tag tag-standard">Standard</span>
+      </li>
+      <li class="ref-item">
+        <div>
+          <div class="ref-title"><a href="https://www.iso.org/standard/75652.html" target="_blank" rel="noopener">ISO/IEC 27002:2022 — Information security controls</a></div>
+          <div class="ref-meta">International Organization for Standardization. Published February 2022. Reference set of information security controls including implementation guidance. Restructured from 14 domains to 4 themes with 93 controls.</div>
+        </div>
+        <span class="ref-tag tag-standard">Standard</span>
+      </li>
+      <li class="ref-item">
+        <div>
+          <div class="ref-title"><a href="https://www.ncsc.gov.uk/collection/cyber-security-for-small-to-medium-sized-organisations" target="_blank" rel="noopener">NCSC: Cyber Security for Small to Medium Organisations</a></div>
+          <div class="ref-meta">UK National Cyber Security Centre. Practical guidance on implementing security controls aligned with ISO 27001 for SMEs and startups.</div>
+        </div>
+        <span class="ref-tag tag-guidance">Guidance</span>
+      </li>
+      <li class="ref-item">
+        <div>
+          <div class="ref-title"><a href="https://www.itgovernance.co.uk/iso27001" target="_blank" rel="noopener">IT Governance: ISO 27001 Implementation Guide</a></div>
+          <div class="ref-meta">IT Governance Ltd. Comprehensive overview of the 2022 revision changes, clause-by-clause breakdown, and practical implementation advice for UK organisations.</div>
+        </div>
+        <span class="ref-tag tag-guidance">Guidance</span>
+      </li>
+      <li class="ref-item">
+        <div>
+          <div class="ref-title"><a href="https://advisera.com/27001academy/iso-27001-annex-a-controls/" target="_blank" rel="noopener">Advisera: ISO 27001 Annex A Controls Explained</a></div>
+          <div class="ref-meta">Advisera. Detailed walkthrough of all 93 Annex A controls across Organisational, People, Physical, and Technological themes with implementation examples.</div>
+        </div>
+        <span class="ref-tag tag-article">Article</span>
+      </li>
+      <li class="ref-item">
+        <div>
+          <div class="ref-title"><a href="https://www.bsigroup.com/en-GB/capabilities/iso-27001/" target="_blank" rel="noopener">BSI: ISO 27001 Certification</a></div>
+          <div class="ref-meta">British Standards Institution. Overview of the certification process, audit stages, surveillance cycles, and what auditors expect to see during assessments.</div>
+        </div>
+        <span class="ref-tag tag-guidance">Guidance</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- ISO 42001 -->
+  <div class="ref-section">
+    <span class="ref-section-label label-purple">ISO/IEC 42001:2023</span>
+    <ul class="ref-list">
+      <li class="ref-item">
+        <div>
+          <div class="ref-title"><a href="https://www.iso.org/standard/81230.html" target="_blank" rel="noopener">ISO/IEC 42001:2023 — Artificial intelligence management system</a></div>
+          <div class="ref-meta">International Organization for Standardization. Published December 2023. The world's first international standard providing requirements for establishing, implementing, maintaining, and improving an AI management system (AIMS).</div>
+        </div>
+        <span class="ref-tag tag-standard">Standard</span>
+      </li>
+      <li class="ref-item">
+        <div>
+          <div class="ref-title"><a href="https://www.iso.org/standard/77304.html" target="_blank" rel="noopener">ISO/IEC 23894:2023 — AI Risk Management</a></div>
+          <div class="ref-meta">International Organization for Standardization. Guidance on managing risk specifically arising from AI systems, complementing 42001's risk assessment requirements.</div>
+        </div>
+        <span class="ref-tag tag-standard">Standard</span>
+      </li>
+      <li class="ref-item">
+        <div>
+          <div class="ref-title"><a href="https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai" target="_blank" rel="noopener">EU AI Act — Regulatory Framework</a></div>
+          <div class="ref-meta">European Commission. The EU's risk-based regulatory framework for AI. ISO 42001 alignment supports compliance with EU AI Act requirements, particularly for high-risk AI systems in financial services.</div>
+        </div>
+        <span class="ref-tag tag-standard">Regulation</span>
+      </li>
+      <li class="ref-item">
+        <div>
+          <div class="ref-title"><a href="https://www.bsigroup.com/en-GB/capabilities/iso-42001/" target="_blank" rel="noopener">BSI: ISO 42001 AI Management System Certification</a></div>
+          <div class="ref-meta">British Standards Institution. Overview of the AIMS certification process, relationship to existing ISO management systems, and integration with ISO 27001.</div>
+        </div>
+        <span class="ref-tag tag-guidance">Guidance</span>
+      </li>
+      <li class="ref-item">
+        <div>
+          <div class="ref-title"><a href="https://www.nist.gov/artificial-intelligence/ai-risk-management-framework" target="_blank" rel="noopener">NIST AI Risk Management Framework (AI RMF 1.0)</a></div>
+          <div class="ref-meta">National Institute of Standards and Technology. US framework for AI risk management. Complementary to ISO 42001 and referenced in cross-jurisdictional compliance approaches.</div>
+        </div>
+        <span class="ref-tag tag-guidance">Framework</span>
+      </li>
+      <li class="ref-item">
+        <div>
+          <div class="ref-title"><a href="https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/artificial-intelligence/" target="_blank" rel="noopener">ICO: AI and Data Protection Guidance</a></div>
+          <div class="ref-meta">UK Information Commissioner's Office. Guidance on AI governance, transparency, fairness, and accountability under UK data protection law. Relevant to 42001's data governance requirements.</div>
+        </div>
+        <span class="ref-tag tag-guidance">Guidance</span>
+      </li>
+      <li class="ref-item">
+        <div>
+          <div class="ref-title"><a href="https://www.fca.org.uk/firms/artificial-intelligence" target="_blank" rel="noopener">FCA: Artificial Intelligence in Financial Services</a></div>
+          <div class="ref-meta">Financial Conduct Authority. UK financial regulator's position on AI use in regulated firms. Directly relevant to CoBa's banking clients and their expectations of AI governance.</div>
+        </div>
+        <span class="ref-tag tag-guidance">Regulatory</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- SOC 2 -->
+  <div class="ref-section">
+    <span class="ref-section-label label-amber">SOC 2 Type 2</span>
+    <ul class="ref-list">
+      <li class="ref-item">
+        <div>
+          <div class="ref-title"><a href="https://www.aicpa-cima.com/topic/system-and-organization-controls-soc" target="_blank" rel="noopener">AICPA: System and Organization Controls (SOC)</a></div>
+          <div class="ref-meta">American Institute of Certified Public Accountants. Authoritative source for SOC reporting frameworks, Trust Service Criteria, and engagement standards.</div>
+        </div>
+        <span class="ref-tag tag-standard">Standard</span>
+      </li>
+      <li class="ref-item">
+        <div>
+          <div class="ref-title"><a href="https://www.aicpa-cima.com/resources/download/2017-trust-services-criteria" target="_blank" rel="noopener">AICPA: Trust Services Criteria (2017)</a></div>
+          <div class="ref-meta">AICPA. The criteria against which SOC 2 controls are evaluated: Security (Common Criteria), Availability, Confidentiality, Processing Integrity, and Privacy. Includes detailed points of focus for each criterion.</div>
+        </div>
+        <span class="ref-tag tag-standard">Criteria</span>
+      </li>
+      <li class="ref-item">
+        <div>
+          <div class="ref-title"><a href="https://www.vanta.com/collection/soc-2" target="_blank" rel="noopener">Vanta: SOC 2 Compliance Hub</a></div>
+          <div class="ref-meta">Vanta. Practical guidance on SOC 2 readiness, evidence collection, control mapping, and the difference between Type 1 and Type 2 reports. Includes timeline expectations.</div>
+        </div>
+        <span class="ref-tag tag-tool">Tool/Guide</span>
+      </li>
+      <li class="ref-item">
+        <div>
+          <div class="ref-title"><a href="https://www.drata.com/blog/soc-2-evidence-collection" target="_blank" rel="noopener">Drata: SOC 2 Evidence Collection Best Practices</a></div>
+          <div class="ref-meta">Drata. Detailed guidance on evidence types, automation strategies, population listings, sample selection, and common evidence collection failures that lead to qualified opinions.</div>
+        </div>
+        <span class="ref-tag tag-tool">Tool/Guide</span>
+      </li>
+      <li class="ref-item">
+        <div>
+          <div class="ref-title"><a href="https://www.schellman.com/blog" target="_blank" rel="noopener">Schellman: SOC 2 Audit Insights</a></div>
+          <div class="ref-meta">Schellman &amp; Company. CPA firm specialising in SOC attestation. Blog covers common audit findings, readiness assessment approaches, and what auditors look for during walkthroughs.</div>
+        </div>
+        <span class="ref-tag tag-article">Article</span>
+      </li>
+      <li class="ref-item">
+        <div>
+          <div class="ref-title"><a href="https://sprinto.com/blog/soc-2-type-2-audit/" target="_blank" rel="noopener">Sprinto: SOC 2 Type 2 Audit Process Explained</a></div>
+          <div class="ref-meta">Sprinto. Step-by-step overview of the Type 2 audit process, observation period requirements, and how to maintain control effectiveness throughout the assessment window.</div>
+        </div>
+        <span class="ref-tag tag-article">Article</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- General / Cross-Framework -->
+  <div class="ref-section">
+    <span class="ref-section-label label-grey">Cross-Framework and Context</span>
+    <ul class="ref-list">
+      <li class="ref-item">
+        <div>
+          <div class="ref-title"><a href="https://www.iso.org/management-system-standards.html" target="_blank" rel="noopener">ISO: Harmonized Structure for Management System Standards (Annex SL)</a></div>
+          <div class="ref-meta">International Organization for Standardization. The common high-level structure (Clauses 4-10) shared by ISO 27001 and ISO 42001, enabling integrated management system implementation.</div>
+        </div>
+        <span class="ref-tag tag-standard">Standard</span>
+      </li>
+      <li class="ref-item">
+        <div>
+          <div class="ref-title"><a href="https://coba.io" target="_blank" rel="noopener">CoBa — Official Website</a></div>
+          <div class="ref-meta">CoBa. Company website used to understand CoBa's product positioning, compliance module capabilities, and the operational context in which these frameworks apply.</div>
+        </div>
+        <span class="ref-tag tag-article">Company</span>
+      </li>
+      <li class="ref-item">
+        <div>
+          <div class="ref-title"><a href="https://www.fintechmagazine.com" target="_blank" rel="noopener">FinTech Magazine — AI in Banking Compliance</a></div>
+          <div class="ref-meta">Various articles on AI adoption in banking compliance, regulatory technology trends, and the growing expectation for AI governance frameworks among financial institutions.</div>
+        </div>
+        <span class="ref-tag tag-article">Article</span>
+      </li>
+      <li class="ref-item">
+        <div>
+          <div class="ref-title"><a href="https://www.bankofengland.co.uk/prudential-regulation/publication/2024/artificial-intelligence-and-machine-learning" target="_blank" rel="noopener">Bank of England / PRA: AI and Machine Learning</a></div>
+          <div class="ref-meta">Prudential Regulation Authority. UK banking regulator's supervisory expectations for AI/ML use in regulated firms. Context for why CoBa's banking clients require robust AI governance from their vendors.</div>
+        </div>
+        <span class="ref-tag tag-guidance">Regulatory</span>
+      </li>
+      <li class="ref-item">
+        <div>
+          <div class="ref-title"><a href="https://www.gov.uk/government/publications/ai-regulation-a-pro-innovation-approach" target="_blank" rel="noopener">UK Government: AI Regulation — A Pro-Innovation Approach</a></div>
+          <div class="ref-meta">Department for Science, Innovation and Technology. UK's framework-agnostic approach to AI regulation, emphasising existing regulator responsibility. Relevant context for CoBa's UK/EU market positioning.</div>
+        </div>
+        <span class="ref-tag tag-guidance">Policy</span>
+      </li>
+    </ul>
+  </div>
+
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+  <p class="footer-text">References compiled May 2026. Romeo Lam.</p>
+</footer>
+
+<script>
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('pageLoader').classList.add('done');
+    document.body.classList.remove('loading');
+    document.body.classList.add('loaded');
+  }, 1200);
+});
+</script>
+</body>
+</html>
